@@ -1,3 +1,4 @@
 env
 pyrightconfig.json
 .vim/
+inventory/__pycache__/
