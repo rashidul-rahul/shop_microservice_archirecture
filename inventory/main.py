@@ -51,8 +51,8 @@ def create_product(product: Product):
 
 
 @app.get("/product/{pk}")
-def deg_product(pk: str):
-    return Product.get(pk)
+def geg_product(pk: str):
+    return formant_product(pk)
 
 
 @app.delete("/product/{pk}")
