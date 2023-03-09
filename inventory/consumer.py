@@ -7,7 +7,7 @@ group = "inventory-group"
 
 try:
     redis.xgroup_create(key, group)
-except Exception as _:
+except Exception:
     print("Group already exist!")
 
 
@@ -17,9 +17,15 @@ while True:
         if results != []:
             for result in results:
                 data = result[1][0][1]
-                product = Product.get(data["product_id"])
-                product.quantity = product.quantity - int(data["quantity"])
-                product.save()
+                try:
+                    product = Product.get(data["product_id"])
+                    product.quantity = product.quantity - int(data["quantity"])
+                    product.save()
+                    print("product save")
+                except Exception:
+                    print("call delete")
+                    redis.xadd("order_deleted", data, "*")
+
     except Exception as e:
         print(str(e))
     time.sleep(1)
